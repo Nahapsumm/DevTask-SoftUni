@@ -47,7 +47,7 @@ function render() {
   $('#nav-today').textContent = stats.today;
   $('#nav-done').textContent = stats.done;
   $('#visible-count').textContent = visible.length;
-  $('#tasks-heading').firstChild.textContent = `${filters.project || viewLabels[filters.view]} `;
+  $('#tasks-heading-label').textContent = filters.project || viewLabels[filters.view];
   $('#breadcrumb').textContent = filters.project || viewLabels[filters.view];
   $('#result-count').textContent = `Показани ${visible.length} от ${stats.total} задачи`;
   document.querySelectorAll('[data-view]').forEach(button => {
