@@ -12,6 +12,11 @@ test('generates a v4 identifier when HTTP preview has no randomUUID', () => {
   assert.match(createTaskId(provider), /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/);
 });
 
+test('fails clearly when no crypto provider or UUID methods exist', () => {
+  assert.throws(() => createTaskId(null), /криптографски провайдър/i);
+  assert.throws(() => createTaskId({}), /crypto\.randomUUID.*crypto\.getRandomValues/i);
+});
+
 test('creates a task and trims text fields', () => {
   const result = task({ title: '  План  ', project: '  Курс  ' });
   assert.equal(result.title, 'План'); assert.equal(result.project, 'Курс');
