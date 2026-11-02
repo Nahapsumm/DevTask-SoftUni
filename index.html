@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb">
+  <meta name="description" content="DevTask — организирай задачите си по проекти. Статуси, приоритети, срокове и фокус върху следващата стъпка.">
+  <title>DevTask — твоите проекти, подредени</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/styles.css">
+  <script type="module" src="./src/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Към задачите</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Основна навигация">
+      <a class="brand" href="./" aria-label="DevTask начало"><span class="brand-symbol">d<span>·</span></span><span>devtask<span class="brand-dot">.</span></span></a>
+      <div class="workspace"><span class="workspace-avatar">Т</span><div><strong>Моето пространство</strong><span>Лични проекти</span></div><span class="workspace-light" aria-label="Локално пространство"></span></div>
+      <p class="nav-heading">РАБОТНО ПРОСТРАНСТВО</p>
+      <nav class="nav-links">
+        <button class="nav-link active" data-view="all" aria-current="page"><span data-icon="layout"></span><span>Всички задачи</span><span class="nav-count" id="nav-all">0</span></button>
+        <button class="nav-link" data-view="today"><span data-icon="calendar"></span><span>За днес</span><span class="nav-count" id="nav-today">0</span></button>
+        <button class="nav-link" data-view="done"><span data-icon="check-circle"></span><span>Завършени</span><span class="nav-count" id="nav-done">0</span></button>
+      </nav>
+      <div class="project-heading"><p class="nav-heading">ПРОЕКТИ</p><span id="project-count">0</span></div>
+      <div id="project-list" class="project-list"></div>
+      <div class="sidebar-bottom">
+        <div class="focus-note"><span data-icon="sparkles"></span><strong>Малка стъпка.<br>Реален напредък.</strong><p>Освободи място за идеите си.<br>Започни с една задача.</p></div>
+        <button class="subtle-button" id="export-button"><span data-icon="download"></span>Изтегли задачите</button>
+        <p class="local-note"><span data-icon="shield"></span>Данните остават в този браузър</p>
+      </div>
+    </aside>
+    <main id="main" class="main-content">
+      <header class="topbar"><span>Работно пространство <span class="breadcrumb-separator">/</span> <strong id="breadcrumb">Всички задачи</strong></span><div class="topbar-right"><span class="local-indicator"><i></i> Локално съхранение</span><span class="user-avatar" aria-label="Лично пространство">Т</span></div></header>
+      <div class="content-wrap">
+        <div class="page-header"><div><p class="eyebrow">ПОДРЕДИ ИДЕИТЕ. НАМЕРИ ФОКУСА.</p><h1>Твоят ден, <span>в твои ръце.</span></h1><p class="page-description">По-малко хаос в задачите. Повече време за създаване.</p></div><button class="button button-primary" id="new-task"><span data-icon="plus"></span>Нова задача</button></div>
+        <div id="storage-warning" class="storage-warning" role="alert" hidden></div>
+        <section class="metrics" aria-label="Обобщение на задачите">
+          <article class="metric"><div class="metric-top"><span>Всички задачи</span><span class="metric-icon violet" data-icon="layers"></span></div><div class="metric-bottom"><strong id="stat-total">0</strong><span>идеи в движение</span></div></article>
+          <article class="metric"><div class="metric-top"><span>В процес</span><span class="metric-icon blue" data-icon="clock"></span></div><div class="metric-bottom"><strong id="stat-progress">0</strong><span>стъпка по стъпка</span></div></article>
+          <article class="metric"><div class="metric-top"><span>Завършени</span><span class="metric-icon green" data-icon="check-circle"></span></div><div class="metric-bottom"><strong id="stat-done">0</strong><span>малки победи</span></div></article>
+          <article class="metric progress-metric"><div class="metric-top"><span>Общ напредък</span><span class="metric-icon amber" data-icon="trending"></span></div><div class="metric-bottom"><strong id="stat-percent">0<small>%</small></strong><span id="progress-caption">0 от 0 задачи</span></div><div class="progress-track"><div id="progress-bar"></div></div></article>
+        </section>
+        <section class="tasks-panel" aria-labelledby="tasks-heading">
+          <div class="panel-header"><div><h2 id="tasks-heading">Всички задачи <span id="visible-count">0</span></h2><p id="list-description">Всичко важно, събрано на едно място.</p></div><button class="subtle-button demo-button" id="demo-button"><span data-icon="sparkles"></span>Примерни задачи</button></div>
+          <div class="filter-bar">
+            <label class="search-field"><span data-icon="search"></span><span class="sr-only">Търси задачи</span><input id="search" type="search" placeholder="Търси задача или проект…" autocomplete="off"></label>
+            <div class="filter-selects"><label><span class="sr-only">Филтър по статус</span><select id="filter-status"><option value="all">Всички статуси</option><option value="todo">Предстоящи</option><option value="in-progress">В процес</option><option value="done">Завършени</option></select></label><label><span class="sr-only">Филтър по приоритет</span><select id="filter-priority"><option value="all">Всеки приоритет</option><option value="high">Висок</option><option value="medium">Среден</option><option value="low">Нисък</option></select></label><label><span class="sr-only">Подреждане</span><select id="sort"><option value="newest">Най-нови</option><option value="priority">По приоритет</option><option value="due">По срок</option></select></label></div>
+          </div>
+          <div id="active-project" class="active-project" hidden><span></span><button type="button">Изчисти филтъра ×</button></div>
+          <div class="table-heading" aria-hidden="true"><span>ЗАДАЧА</span><span>СТАТУС</span><span>ПРИОРИТЕТ</span><span>СРОК</span><span></span></div>
+          <div id="task-list" class="task-list"></div>
+          <div id="empty-state" class="empty-state"><div class="empty-icon" data-icon="check-square"></div><h3>Всяка добра идея започва оттук.</h3><p>Добави първата си задача и направи<br>място за следващата голяма стъпка.</p><button class="button button-primary" id="empty-add"><span data-icon="plus"></span>Създай първата задача</button></div>
+          <div class="panel-footer"><span id="result-count" role="status" aria-live="polite">Показани 0 от 0 задачи</span><span><i></i> <span id="save-status">Готово за работа</span></span></div>
+        </section>
+        <footer class="page-footer"><span><strong>devtask.</strong> Малки задачи. Големи идеи.</span><span>Създадено с JavaScript <span class="footer-dot">·</span> SoftUni Project</span></footer>
+      </div>
+    </main>
+  </div>
+  <dialog id="task-dialog" aria-labelledby="dialog-title">
+    <form id="task-form" novalidate>
+      <div class="dialog-header"><div><p class="eyebrow">ЕДНА СТЪПКА НАПРЕД</p><h2 id="dialog-title">Нова задача</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Затвори"><span data-icon="x"></span></button></div>
+      <div class="dialog-body"><label class="field">Заглавие <span class="required">*</span><input id="task-title" name="title" placeholder="Какво искаш да свършиш?" maxlength="120" required aria-describedby="title-error"><span class="field-error" id="title-error"></span></label>
+      <label class="field">Проект<input id="task-project" name="project" placeholder="Напр. SoftUni, Личен проект…" maxlength="48" list="project-options"><datalist id="project-options"></datalist></label>
+      <div class="form-columns"><label class="field">Статус<select name="status" id="task-status"><option value="todo">Предстояща</option><option value="in-progress">В процес</option><option value="done">Завършена</option></select></label><label class="field">Приоритет<select name="priority" id="task-priority"><option value="medium">Среден</option><option value="high">Висок</option><option value="low">Нисък</option></select></label></div>
+      <label class="field">Краен срок<input id="task-due" name="dueDate" type="date" aria-describedby="due-error"><span class="field-error" id="due-error"></span></label>
+      <label class="field">Описание<textarea name="description" id="task-description" rows="3" placeholder="Контекст, бележки или следваща стъпка…" maxlength="1000"></textarea></label><p id="form-error" class="field-error" role="alert"></p></div>
+      <div class="dialog-footer"><button type="button" class="button button-secondary" id="cancel-dialog">Отказ</button><button type="submit" class="button button-primary"><span data-icon="check"></span><span id="submit-label">Създай задача</span></button></div>
+    </form>
+  </dialog>
+  <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title"><form method="dialog"><div class="dialog-body"><div class="delete-symbol" data-icon="trash"></div><h2 id="confirm-title">Да изтрием задачата?</h2><p id="confirm-description"></p></div><div class="dialog-footer"><button class="button button-secondary" value="cancel">Отказ</button><button class="button button-danger" value="confirm">Изтрий</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript>DevTask изисква включен JavaScript.</noscript>
+</body>
+</html>
