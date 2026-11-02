@@ -1,0 +1,14 @@
+{
+  "name": "devtask-softuni",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Small modular JavaScript task manager for the AI-Assisted Development course.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node scripts/server.mjs",
+    "start": "node scripts/server.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.js"
+  }
+}
