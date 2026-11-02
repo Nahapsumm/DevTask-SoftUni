@@ -40,7 +40,13 @@ export function validateTask(input) {
 }
 
 export function createTaskId(cryptoProvider = globalThis.crypto) {
+  if (!cryptoProvider) {
+    throw new Error('Липсва криптографски провайдър за генериране на UUID.');
+  }
   if (typeof cryptoProvider.randomUUID === 'function') return cryptoProvider.randomUUID();
+  if (typeof cryptoProvider.getRandomValues !== 'function') {
+    throw new Error('Липсват crypto.randomUUID и crypto.getRandomValues за създаване на UUID v4.');
+  }
   // getRandomValues also works in HTTP previews where randomUUID is unavailable.
   const bytes = cryptoProvider.getRandomValues(new Uint8Array(16));
   bytes[6] = (bytes[6] & 15) | 64;
