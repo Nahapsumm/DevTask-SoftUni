@@ -1,39 +1,45 @@
-✔ generates a v4 identifier when HTTP preview has no randomUUID (2.563784ms)
-✔ creates a task and trims text fields (0.479562ms)
-✔ rejects empty or whitespace-only titles (0.783091ms)
-✔ enforces length limits at their boundaries (0.445771ms)
-✔ rejects unsupported statuses and priorities (0.452472ms)
-✔ validates actual calendar dates including leap years (1.09124ms)
-✔ formats local calendar dates without UTC conversion (0.308828ms)
-✔ updates immutably and preserves task identity and creation time (0.455646ms)
-✔ invalid edit does not change the original task (0.463198ms)
-✔ reports missing tasks during update and deletion (3.787349ms)
-✔ deletes only the requested task without mutating the array (1.665361ms)
-✔ searches Cyrillic text case-insensitively in title, project and description (2.126585ms)
-✔ combines query, status, priority and project filters (0.389839ms)
-✔ today view includes only tasks on the local requested date (0.299575ms)
-✔ completed view includes completed tasks only (0.219506ms)
-✔ sorts by priority and deadline without mutating source order (11.789232ms)
-✔ calculates stats, overdue count and empty progress correctly (0.69449ms)
-✔ rejects duplicate identities and malformed stored timestamps (0.704966ms)
-✔ escapes HTML characters in user-controlled content (0.534653ms)
-✔ renders injected markup as text including attribute values (0.677956ms)
-✔ demo data is valid and uses the supplied calendar date (1.690589ms)
-✔ first launch returns an empty list without errors (2.234084ms)
-✔ round trips tasks in a versioned JSON envelope (1.726321ms)
-✔ reports corrupted JSON and preserves the original bytes (0.455505ms)
-✔ rejects unsupported versions without overwriting them (0.336199ms)
-✔ rejects malformed and duplicate stored task records (0.568213ms)
-✔ handles a blocked storage read (0.293566ms)
-✔ reports quota errors and leaves existing saved data intact (0.824924ms)
-✔ invalid records cannot replace an existing saved list (0.304712ms)
-✔ explicit reset removes only the application storage key (0.406524ms)
-✔ reports blocked reset operations (0.537808ms)
-ℹ tests 31
+
+> devtask-softuni@1.0.1 test
+> node --test tests/model.test.js tests/storage.test.js
+
+✔ generates a v4 identifier when HTTP preview has no randomUUID (1.227603ms)
+✔ fails clearly when no crypto provider or UUID methods exist (0.536186ms)
+✔ creates a task and trims text fields (0.373185ms)
+✔ rejects empty or whitespace-only titles (0.193347ms)
+✔ enforces length limits at their boundaries (0.488981ms)
+✔ rejects unsupported statuses and priorities (0.624928ms)
+✔ validates actual calendar dates including leap years (1.011393ms)
+✔ formats local calendar dates without UTC conversion (0.206717ms)
+✔ updates immutably and preserves task identity and creation time (0.378943ms)
+✔ invalid edit does not change the original task (0.378482ms)
+✔ reports missing tasks during update and deletion (4.708259ms)
+✔ deletes only the requested task without mutating the array (0.786468ms)
+✔ searches Cyrillic text case-insensitively in title, project and description (0.391271ms)
+✔ combines query, status, priority and project filters (0.208971ms)
+✔ today view includes only tasks on the local requested date (0.172796ms)
+✔ completed view includes completed tasks only (0.1413ms)
+✔ sorts by priority and deadline without mutating source order (8.658931ms)
+✔ calculates stats, overdue count and empty progress correctly (0.285474ms)
+✔ rejects duplicate identities and malformed stored timestamps (0.292014ms)
+✔ escapes HTML characters in user-controlled content (0.184994ms)
+✔ renders injected markup as text including attribute values (0.407115ms)
+✔ demo data is valid and uses the supplied calendar date (1.489633ms)
+✔ first launch returns an empty list without errors (2.684563ms)
+✔ round trips tasks in a versioned JSON envelope (5.813315ms)
+✔ reports corrupted JSON and preserves the original bytes (0.329269ms)
+✔ rejects unsupported versions without overwriting them (0.161209ms)
+✔ rejects malformed and duplicate stored task records (0.412944ms)
+✔ does not overwrite original storage when top-level JSON values are invalid (0.209652ms)
+✔ handles a blocked storage read (0.292114ms)
+✔ reports quota errors and leaves existing saved data intact (0.474605ms)
+✔ invalid records cannot replace an existing saved list (0.22269ms)
+✔ explicit reset removes only the application storage key (0.684632ms)
+✔ reports blocked reset operations (0.199456ms)
+ℹ tests 33
 ℹ suites 0
-ℹ pass 31
+ℹ pass 33
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 204.512518
+ℹ duration_ms 229.098341
