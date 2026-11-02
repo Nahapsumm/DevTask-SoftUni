@@ -30,6 +30,16 @@ test('rejects malformed and duplicate stored task records', () => {
   const task = makeTask();
   for (const tasks of [[{}], [task, task], [{ ...task, status: 'invalid' }], null]) assert.ok(loadTasks(memoryStorage(JSON.stringify({ version: 1, tasks }))).error);
 });
+
+test('does not overwrite original storage when top-level JSON values are invalid', () => {
+  for (const invalid of [null, 42, true, [], 'plain text']) {
+    const raw = JSON.stringify(invalid);
+    const storage = memoryStorage(raw);
+    const result = loadTasks(storage);
+    assert.ok(result.error);
+    assert.equal(storage.getItem(STORAGE_KEY), raw);
+  }
+});
 test('handles a blocked storage read', () => {
   assert.ok(loadTasks({ getItem() { throw new Error('SecurityError'); } }).error);
 });
